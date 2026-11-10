@@ -51,7 +51,10 @@ jobs:
                If this is an edit and labels you added earlier no longer fit, remove them
                with `--remove-label`. Do not remove labels that a human added.
             5. Write a general diagnosis in English, to be used later by the team to
-               implement the solution. The comment MUST start with the hidden marker
+               implement the solution. The comment MUST be formatted in Markdown so
+               that GitHub can render it correctly (use headings or bold section titles,
+               bullet/numbered lists, and backticks for file paths and code). The comment
+               MUST start with the hidden marker
                `<!-- claude-issue-triage -->` and contain these sections:
                - **Summary**: what the issue reports or requests
                - **Type & labels applied**: with a short reason
