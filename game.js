@@ -322,7 +322,7 @@ function applyTheme(t) {
   if (t === 'light') document.documentElement.dataset.theme = 'light';
   else delete document.documentElement.dataset.theme;
   gridColor = getComputedStyle(document.documentElement).getPropertyValue('--grid').trim();
-  themeToggle.textContent = t === 'light' ? '☾ Modo oscuro' : '☀ Modo claro';
+  themeToggle.textContent = t === 'light' ? '☾ Dark mode' : '☀ Light mode';
   try { localStorage.setItem('tetris-theme', t); } catch (_) {}
   // El loop está cancelado en pausa / game over: redibujar manualmente
   draw();
