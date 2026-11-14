@@ -15,6 +15,18 @@ const COLORS = [
   '#ffb74d', // L - orange
 ];
 
+// Variante más saturada para contraste sobre el tablero claro
+const COLORS_LIGHT = [
+  null,
+  '#00acc1', // I
+  '#fbc02d', // O
+  '#8e24aa', // T
+  '#43a047', // S
+  '#e53935', // Z
+  '#1e88e5', // J
+  '#fb8c00', // L
+];
+
 const PIECES = [
   null,
   [[0,0,0,0],[1,1,1,1],[0,0,0,0],[0,0,0,0]], // I
@@ -39,6 +51,10 @@ const overlay = document.getElementById('overlay');
 const overlayTitle = document.getElementById('overlay-title');
 const overlayScore = document.getElementById('overlay-score');
 const restartBtn = document.getElementById('restart-btn');
+const themeToggle = document.getElementById('theme-toggle');
+
+let theme = 'dark';
+let gridColor = '#22222e';
 
 let board, current, next, score, lines, level, paused, gameOver, lastTime, dropAccum, dropInterval, animId;
 
@@ -158,7 +174,7 @@ function updateHUD() {
 
 function drawBlock(context, x, y, colorIndex, size, alpha) {
   if (!colorIndex) return;
-  const color = COLORS[colorIndex];
+  const color = (theme === 'light' ? COLORS_LIGHT : COLORS)[colorIndex];
   context.globalAlpha = alpha ?? 1;
   context.fillStyle = color;
   context.fillRect(x * size + 1, y * size + 1, size - 2, size - 2);
@@ -169,7 +185,7 @@ function drawBlock(context, x, y, colorIndex, size, alpha) {
 }
 
 function drawGrid() {
-  ctx.strokeStyle = '#22222e';
+  ctx.strokeStyle = gridColor;
   ctx.lineWidth = 0.5;
   for (let c = 1; c < COLS; c++) {
     ctx.beginPath();
@@ -301,4 +317,26 @@ document.addEventListener('keydown', e => {
 
 restartBtn.addEventListener('click', init);
 
+function applyTheme(t) {
+  theme = t;
+  if (t === 'light') document.documentElement.dataset.theme = 'light';
+  else delete document.documentElement.dataset.theme;
+  gridColor = getComputedStyle(document.documentElement).getPropertyValue('--grid').trim();
+  themeToggle.textContent = t === 'light' ? '☾ Modo oscuro' : '☀ Modo claro';
+  try { localStorage.setItem('tetris-theme', t); } catch (_) {}
+  // El loop está cancelado en pausa / game over: redibujar manualmente
+  draw();
+  drawNext();
+}
+
+themeToggle.addEventListener('click', () => {
+  applyTheme(theme === 'light' ? 'dark' : 'light');
+  themeToggle.blur(); // evita que Space/Enter vuelvan a activar el botón
+});
+
+let savedTheme = null;
+try { savedTheme = localStorage.getItem('tetris-theme'); } catch (_) {}
+
+
 init();
+applyTheme(savedTheme === 'light' ? 'light' : 'dark');
