@@ -57,6 +57,7 @@ const themeBtn = document.getElementById('theme-toggle');
 
 let theme = 'dark';
 let startLevel = 1;
+let gameStartLevel = 1;
 let inputBlockedUntil = 0;
 let board, current, next, score, lines, level, paused, gameOver, lastTime, dropAccum, dropInterval, animId;
 
@@ -124,7 +125,7 @@ function clearLines() {
   if (cleared) {
     lines += cleared;
     score += (LINE_SCORES[cleared] || 0) * level;
-    level = startLevel + Math.floor(lines / 10);
+    level = gameStartLevel + Math.floor(lines / 10);
     dropInterval = dropIntervalFor(level);
     updateHUD();
   }
@@ -284,10 +285,11 @@ function init() {
   board = createBoard();
   score = 0;
   lines = 0;
-  level = startLevel;
+  gameStartLevel = startLevel;
+  level = gameStartLevel;
   paused = false;
   gameOver = false;
-  dropInterval = dropIntervalFor(startLevel);
+  dropInterval = dropIntervalFor(gameStartLevel);
   dropAccum = 0;
   lastTime = performance.now();
   next = randomPiece();
@@ -295,19 +297,18 @@ function init() {
   updateHUD();
   overlay.classList.add('hidden');
   hidePauseMenu();
-  inputBlockedUntil = performance.now() + 150;
   cancelAnimationFrame(animId);
   animId = requestAnimationFrame(loop);
 }
 
 document.addEventListener('keydown', e => {
+  const t = e.target;
+  if (t && /^(INPUT|SELECT|TEXTAREA)$/.test(t.tagName)) return;
   if (e.code === 'KeyP' || e.code === 'Escape') {
-    if (e.repeat) return;
+    if (e.repeat || e.ctrlKey || e.metaKey || e.altKey) return;
     togglePause();
     return;
   }
-  const t = e.target;
-  if (t && /^(INPUT|SELECT|TEXTAREA)$/.test(t.tagName)) return;
   if (paused || gameOver || performance.now() < inputBlockedUntil) return;
   switch (e.code) {
     case 'ArrowLeft':
