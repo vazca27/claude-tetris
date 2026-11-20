@@ -227,3 +227,64 @@ kbd {
   background: var(--accent);
   color: var(--accent-contrast);
 }
+
+/* ---- Skins (data-skin en <html>) ---- */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  align-items: center;
+}
+
+.skin-picker {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1px;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#skin-select {
+  background: var(--kbd-bg);
+  color: var(--text);
+  border: 1px solid var(--accent);
+  border-radius: 6px;
+  padding: 5px 8px;
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+}
+
+[data-skin="neon"] {
+  --board-bg: #000000;
+  --grid: #14142a;
+  --border: #00e5ff;
+  --board-shadow: rgba(0, 229, 255, 0.35);
+}
+
+[data-skin="pastel"] {
+  --board-bg: #2a2438;
+  --grid: #383048;
+  --border: #4a4060;
+}
+
+[data-skin="pastel"][data-theme="light"] {
+  --board-bg: #fff7fb;
+  --grid: #f1e2ec;
+  --border: #e4cfdc;
+}
+
+[data-skin="pixel"] {
+  --board-bg: #101820;
+  --grid: #1c2733;
+  --border: #35485c;
+}
+
+[data-skin="pixel"][data-theme="light"] {
+  --board-bg: #e9efe0;
+  --grid: #d3dcc6;
+  --border: #a9b79a;
+}
