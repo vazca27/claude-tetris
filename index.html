@@ -27,6 +27,10 @@
           <span class="label">LEVEL</span>
           <span class="value" id="level">1</span>
         </div>
+        <div class="panel-section">
+          <span class="label">COMBO</span>
+          <span class="value" id="combo">0</span>
+        </div>
 
         <div class="panel-section">
           <span class="label">NEXT</span>
@@ -50,7 +54,26 @@
       <div class="overlay-box">
         <p id="overlay-title">GAME OVER</p>
         <p id="overlay-score"></p>
+        <div id="name-entry" class="name-entry hidden">
+          <label for="name-input" class="rec-label">¡Nuevo record! Tu nombre:</label>
+          <div class="name-row">
+            <input id="name-input" type="text" maxlength="12" autocomplete="off" spellcheck="false" />
+            <button id="name-save-btn" type="button" class="btn">Guardar</button>
+          </div>
+        </div>
+        <div id="overlay-records" class="records hidden"></div>
+        <p id="overlay-stats" class="rec-stats hidden"></p>
         <button id="restart-btn">Reiniciar</button>
+      </div>
+    </div>
+
+    <div id="start-screen" class="overlay">
+      <div class="overlay-box">
+        <p class="start-title">TOP 5</p>
+        <div id="start-records" class="records"></div>
+        <p id="start-stats" class="rec-stats"></p>
+        <button id="play-btn" type="button" class="btn">Jugar</button>
+        <button id="reset-records-btn" type="button" class="btn btn-ghost">Resetear records</button>
       </div>
     </div>
     </div>
